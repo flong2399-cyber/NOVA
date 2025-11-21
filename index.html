@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -91,14 +92,66 @@
   <header>
     <h1>NovaCoin</h1>
     <p>La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.</p>
-    <nav>
-      <a href="#que-es">Qué es</a>
-      <a href="#caracteristicas">Características</a>
-      <a href="#uso">Por qué usar</a>
-      <a href="#hoja-ruta">Hoja de ruta</a>
-      <a href="#tokenomics">Tokenomics</a>
-    </nav>
-  </header> <section id="que-es">
+
+    <!-- Botones en esquina -->
+    <div style="position:absolute; top:20px; right:20px; display:flex; gap:15px; align-items:center;">
+      <div id="langBtn" style="cursor:pointer; font-size:1.4rem;">🌐</div>
+      <div id="menuBtn" style="cursor:pointer; font-size:1.8rem;">≡</div>
+    </div>
+</header>
+
+<!-- Sidebar animado -->
+<div id="sidebar" style="position:fixed; top:0; left:-260px; width:260px; height:100%; background:#111; border-right:1px solid #333; padding:20px; transition:0.3s; z-index:2000; display:flex; flex-direction:column; gap:15px;">
+  <h2 style="color:#00d4ff; margin-top:0;">Menú</h2>
+  <a href="#que-es" class="sb">Qué es</a>
+  <a href="#caracteristicas" class="sb">Características</a>
+  <a href="#uso" class="sb">Por qué usar</a>
+  <a href="#hoja-ruta" class="sb">Hoja de ruta</a>
+  <a href="#tokenomics" class="sb">Tokenomics</a>
+</div>
+
+<!-- Overlay oscuro -->
+<div id="overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; z-index:1500; transition:0.3s;"></div>
+
+<!-- Selector de idioma -->
+<div id="langMenu" style="display:none; position:fixed; right:20px; top:60px; background:#111; border:1px solid #333; border-radius:8px; padding:10px; z-index:3000;">
+  <a href="#" onclick="setLang('es')" style="color:white; text-decoration:none; display:block; padding:5px;">🇪🇸 Español</a>
+  <a href="#" onclick="setLang('en')" style="color:white; text-decoration:none; display:block; padding:5px;">🇬🇧 English</a>
+</div>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const menuBtn = document.getElementById("menuBtn");
+  const langBtn = document.getElementById("langBtn");
+  const langMenu = document.getElementById("langMenu");
+  const overlay = document.getElementById("overlay");
+
+  function toggleSidebar() {
+    const open = sidebar.style.left === "0px";
+    sidebar.style.left = open ? "-260px" : "0px";
+    overlay.style.display = open ? "none" : "block";
+  }
+
+  menuBtn.onclick = toggleSidebar;
+  overlay.onclick = toggleSidebar;
+
+  langBtn.onclick = () => {
+    langMenu.style.display = langMenu.style.display === "block" ? "none" : "block";
+  };
+
+  document.querySelectorAll('.sb').forEach(link => {
+    link.onclick = () => {
+      toggleSidebar();
+    };
+  });
+
+  function setLang(l) {
+    alert("Idioma cambiado a: " + (l === 'es' ? 'Español' : 'English'));
+    langMenu.style.display = "none";
+  }
+</script>
+
+  <section id="que-es">
     <h2>¿Qué es NovaCoin?</h2>
     <div class="card">
       <p>
@@ -107,7 +160,9 @@
         experiencia segura y accesible para todos.
       </p>
     </div>
-  </section> <section id="caracteristicas">
+  </section>
+
+  <section id="caracteristicas">
     <h2>Características principales</h2>
     <div class="card">
       <ul>
@@ -117,7 +172,9 @@
         <li><strong>Tecnología ecológica:</strong> Consumo energético mínimo.</li>
       </ul>
     </div>
-  </section> <section id="uso">
+  </section>
+
+  <section id="uso">
     <h2>¿Por qué usar NovaCoin?</h2>
     <div class="card">
       <p>
@@ -125,7 +182,9 @@
         común, nuestra tecnología te ofrece libertad y control total de tus finanzas digitales.
       </p>
     </div>
-  </section> <section id="hoja-ruta">
+  </section>
+
+  <section id="hoja-ruta">
     <h2>Hoja de ruta</h2>
     <div class="card">
       <ul>
@@ -135,7 +194,9 @@
         <li>⧗ App móvil para pagos con QR</li>
       </ul>
     </div>
-  </section> <section id="tokenomics">
+  </section>
+
+  <section id="tokenomics">
     <h2>Tokenomics</h2>
     <div class="card">
       <p>Distribución total de los tokens NovaCoin (total: 1,000,000 NC):</p>
@@ -172,8 +233,90 @@
         </tr>
       </table>
     </div>
-  </section> <footer>
+  </section>
+
+  <footer>
     <p>© 2025 NovaCoin — Proyecto ficticio creado para demostración</p>
   </footer>
+<script>
+// Textos en ambos idiomas
+const texts = {
+  es: {
+    home: "Inicio",
+    about: "Sobre la Criptomoneda",
+    tokenomics: "Tokenomics",
+    roadmap: "Hoja de Ruta",
+    welcome_title: "Bienvenido a NovaX Coin",
+    welcome_desc: "Una criptomoneda rápida, segura y construida para el futuro.",
+    about_title: "¿Qué es NovaX Coin?",
+    about_desc: "NovaX es una criptomoneda diseñada para transacciones instantáneas y bajas comisiones.",
+    token_title: "Tokenomics",
+    token_desc: "Distribución transparente para una economía sostenible.",
+    roadmap_title: "Hoja de Ruta",
+    roadmap_desc: "Nuestro camino hacia un ecosistema completo.",
+  },
+  en: {
+    home: "Home",
+    about: "About the Cryptocurrency",
+    tokenomics: "Tokenomics",
+    roadmap: "Roadmap",
+    welcome_title: "Welcome to NovaX Coin",
+    welcome_desc: "A fast, secure cryptocurrency built for the future.",
+    about_title: "What is NovaX Coin?",
+    about_desc: "NovaX is a cryptocurrency designed for instant transactions and low fees.",
+    token_title: "Tokenomics",
+    token_desc: "Transparent distribution for a sustainable economy.",
+    roadmap_title: "Roadmap",
+    roadmap_desc: "Our path toward a complete ecosystem.",
+  }
+};
+
+// Cambiar idioma
+function setLanguage(lang) {
+  document.querySelectorAll('[data-text]').forEach(el => {
+    const key = el.getAttribute('data-text');
+    if (texts[lang][key]) el.textContent = texts[lang][key];
+  });
+}
+
+// Detectar clicks en selector
+const langSelector = document.getElementById('langSelector');
+langSelector.addEventListener('change', () => {
+  setLanguage(langSelector.value);
+});
+
+</script><div id="langFlags" style="position:fixed; top:20px; right:20px; display:flex; gap:10px; cursor:pointer; z-index:2000;">
+  <img src="https://flagcdn.com/24x18/es.png" id="flagEs" alt="Español" style="width:30px; border-radius:4px;">
+  <img src="https://flagcdn.com/24x18/gb.png" id="flagEn" alt="English" style="width:30px; border-radius:4px;">
+</div>
+
+<script>
+// Textos ya existentes (no se modifica)
+
+// Detectar clicks en banderas
+const flagEs = document.getElementById('flagEs');
+const flagEn = document.getElementById('flagEn');
+
+flagEs.addEventListener('click', () => {
+  setLanguage('es');
+  localStorage.setItem('lang','es');
+});
+
+flagEn.addEventListener('click', () => {
+  setLanguage('en');
+  localStorage.setItem('lang','en');
+});
+
+// Detectar idioma del navegador o guardado previamente
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('lang');
+  if (saved) {
+    setLanguage(saved);
+  } else {
+    const browserLang = navigator.language.startsWith('es') ? 'es' : 'en';
+    setLanguage(browserLang);
+  }
+});
+</script>
 </body>
 </html>
