@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaCoin - La Nueva Era de las Criptomonedas</title>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
     body {
       font-family: Arial, sans-serif;
       background: #0d0d0d;
@@ -24,137 +22,93 @@
       top: 0;
       z-index: 1000;
     }
-    header h1 {
-      font-size: 2.8rem;
-      margin: 0;
-      color: #00d4ff;
-    }
-    nav {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    nav a {
-      color: #00bfe6;
-      text-decoration: none;
-      margin: 5px 15px;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    section {
-      padding: 40px;
-      max-width: 900px;
-      margin: auto;
-      line-height: 1.6;
-    }
-    .card {
-      background: #161616;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 10px;
-      border: 1px solid #222;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #111;
-      border-top: 1px solid #333;
-      margin-top: 40px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    th, td {
-      border: 1px solid #222;
-      padding: 12px;
-      text-align: center;
-    }
-    th {
-      background-color: #1a1a1a;
-      color: #00bfe6;
-    }
+    header h1 { font-size: 2.2rem; margin: 0; color: #00d4ff; }
+    header p { margin: 6px 0 0 0; color: #cfeefb; }
+    nav { margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; }
+    nav a { color: #00bfe6; text-decoration: none; margin: 5px 12px; font-weight: bold; }
+    nav a:hover { text-decoration: underline; }
+
+    /* Sidebar */
+    #sidebar { position:fixed; top:0; left:-300px; width:300px; height:100%; background:#111; border-right:1px solid #333; padding:20px; transition:left 0.28s ease; z-index:2000; display:flex; flex-direction:column; gap:15px; }
+    #sidebar h2 { color:#00d4ff; margin:0; }
+    #sidebar a { color:#fff; text-decoration:none; padding:8px 6px; border-radius:6px; }
+    #sidebar a:hover { background: rgba(255,255,255,0.03); }
+
+    /* Overlay */
+    #overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; z-index:1500; }
+
+    /* Lang menu */
+    #langMenu { display:none; position:fixed; right:20px; top:60px; background:#111; border:1px solid #333; border-radius:8px; padding:6px; z-index:3000; }
+    #langMenu a { color:white; text-decoration:none; display:block; padding:6px 10px; }
+
+    section { padding: 40px; max-width: 900px; margin: auto; line-height: 1.6; }
+    .card { background: #161616; padding: 20px; margin: 20px 0; border-radius: 10px; border: 1px solid #222; }
+    footer { text-align: center; padding: 20px; background: #111; border-top: 1px solid #333; margin-top: 40px; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #222; padding: 12px; text-align: center; }
+    th { background-color: #1a1a1a; color: #00bfe6; }
+
+    /* Small screens */
     @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-      }
-      nav a {
-        margin: 8px 0;
-      }
+      nav { flex-direction: column; }
+      nav a { margin: 8px 0; }
+      header { padding: 14px; }
+      #sidebar { width:260px; }
     }
+
+    /* Flag active */
+    .flag { width:30px; height:auto; border-radius:4px; cursor:pointer; opacity:0.85; }
+    .flag.active { box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.12); opacity:1; }
+
+    /* Menu buttons */
+    .top-buttons { position:absolute; top:14px; right:14px; display:flex; gap:10px; align-items:center; }
+    .icon-btn { font-size:20px; cursor:pointer; color:#00bfe6; padding:6px; border-radius:6px; background:transparent; border:none; }
   </style>
 </head>
 <body>
   <header>
-    <h1>NovaCoin</h1>
-    <p>La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.</p>
+    <h1 data-text="welcome_title">NovaCoin</h1>
+    <p data-text="welcome_desc">La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.</p>
 
-    <!-- Botones en esquina -->
-    <div style="position:absolute; top:20px; right:20px; display:flex; gap:15px; align-items:center;">
-      <div id="langBtn" style="cursor:pointer; font-size:1.4rem;">🌐</div>
-      <div id="menuBtn" style="cursor:pointer; font-size:1.8rem;">≡</div>
+    <!-- Top buttons: language flags + menu -->
+    <div class="top-buttons">
+      <img src="https://flagcdn.com/24x18/es.png" id="flagEs" class="flag" alt="ES" title="Español">
+      <img src="https://flagcdn.com/24x18/gb.png" id="flagEn" class="flag" alt="EN" title="English">
+      <button id="menuBtn" class="icon-btn" aria-label="Open menu">≡</button>
     </div>
-</header>
 
-<!-- Sidebar animado -->
-<div id="sidebar" style="position:fixed; top:0; left:-260px; width:260px; height:100%; background:#111; border-right:1px solid #333; padding:20px; transition:0.3s; z-index:2000; display:flex; flex-direction:column; gap:15px;">
-  <h2 style="color:#00d4ff; margin-top:0;">Menú</h2>
-  <a href="#que-es" class="sb">Qué es</a>
-  <a href="#caracteristicas" class="sb">Características</a>
-  <a href="#uso" class="sb">Por qué usar</a>
-  <a href="#hoja-ruta" class="sb">Hoja de ruta</a>
-  <a href="#tokenomics" class="sb">Tokenomics</a>
-</div>
+    <nav aria-label="Main navigation">
+      <a href="#que-es" data-text="about">Qué es</a>
+      <a href="#caracteristicas" data-text="tokenomics">Características</a>
+      <a href="#uso" data-text="home">Por qué usar</a>
+      <a href="#hoja-ruta" data-text="roadmap">Hoja de ruta</a>
+      <a href="#tokenomics" data-text="tokenomics">Tokenomics</a>
+    </nav>
+  </header>
 
-<!-- Overlay oscuro -->
-<div id="overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; z-index:1500; transition:0.3s;"></div>
+  <!-- Sidebar animado -->
+  <div id="sidebar" aria-hidden="true">
+    <h2 data-text="home">Menú</h2>
+    <a href="#que-es" class="sb">Qué es</a>
+    <a href="#caracteristicas" class="sb">Características</a>
+    <a href="#uso" class="sb">Por qué usar</a>
+    <a href="#hoja-ruta" class="sb">Hoja de ruta</a>
+    <a href="#tokenomics" class="sb">Tokenomics</a>
+  </div>
 
-<!-- Selector de idioma -->
-<div id="langMenu" style="display:none; position:fixed; right:20px; top:60px; background:#111; border:1px solid #333; border-radius:8px; padding:10px; z-index:3000;">
-  <a href="#" onclick="setLang('es')" style="color:white; text-decoration:none; display:block; padding:5px;">🇪🇸 Español</a>
-  <a href="#" onclick="setLang('en')" style="color:white; text-decoration:none; display:block; padding:5px;">🇬🇧 English</a>
-</div>
+  <!-- Overlay oscuro -->
+  <div id="overlay"></div>
 
-<script>
-  const sidebar = document.getElementById("sidebar");
-  const menuBtn = document.getElementById("menuBtn");
-  const langBtn = document.getElementById("langBtn");
-  const langMenu = document.getElementById("langMenu");
-  const overlay = document.getElementById("overlay");
-
-  function toggleSidebar() {
-    const open = sidebar.style.left === "0px";
-    sidebar.style.left = open ? "-260px" : "0px";
-    overlay.style.display = open ? "none" : "block";
-  }
-
-  menuBtn.onclick = toggleSidebar;
-  overlay.onclick = toggleSidebar;
-
-  langBtn.onclick = () => {
-    langMenu.style.display = langMenu.style.display === "block" ? "none" : "block";
-  };
-
-  document.querySelectorAll('.sb').forEach(link => {
-    link.onclick = () => {
-      toggleSidebar();
-    };
-  });
-
-  function setLang(l) {
-    alert("Idioma cambiado a: " + (l === 'es' ? 'Español' : 'English'));
-    langMenu.style.display = "none";
-  }
-</script>
+  <!-- Lang menu (backup, not used if flags present) -->
+  <div id="langMenu">
+    <a href="#" data-lang="es"> Español</a>
+    <a href="#" data-lang="en"> English</a>
+  </div>
 
   <section id="que-es">
-    <h2>¿Qué es NovaCoin?</h2>
+    <h2 data-text="about_title">¿Qué es NovaCoin?</h2>
     <div class="card">
-      <p>
+      <p data-text="about_desc">
         NovaCoin es una criptomoneda descentralizada diseñada para pagos rápidos, comisiones bajas
         y privacidad avanzada. Construida con tecnología blockchain de última generación, ofrece una
         experiencia segura y accesible para todos.
@@ -163,7 +117,7 @@
   </section>
 
   <section id="caracteristicas">
-    <h2>Características principales</h2>
+    <h2 data-text="token_title">Características principales</h2>
     <div class="card">
       <ul>
         <li><strong>Transacciones instantáneas:</strong> Confirmaciones en menos de 2 segundos.</li>
@@ -175,17 +129,15 @@
   </section>
 
   <section id="uso">
-    <h2>¿Por qué usar NovaCoin?</h2>
+    <h2 data-text="about_title">¿Por qué usar NovaCoin?</h2>
     <div class="card">
-      <p>
-        NovaCoin combina innovación con simplicidad. Ya seas un inversor, desarrollador o usuario
-        común, nuestra tecnología te ofrece libertad y control total de tus finanzas digitales.
-      </p>
+      <p data-text="about_desc">NovaCoin combina innovación con simplicidad. Ya seas un inversor, desarrollador o usuario
+        común, nuestra tecnología te ofrece libertad y control total de tus finanzas digitales.</p>
     </div>
   </section>
 
   <section id="hoja-ruta">
-    <h2>Hoja de ruta</h2>
+    <h2 data-text="roadmap_title">Hoja de ruta</h2>
     <div class="card">
       <ul>
         <li>✔ Lanzamiento de red principal (Mainnet)</li>
@@ -197,9 +149,9 @@
   </section>
 
   <section id="tokenomics">
-    <h2>Tokenomics</h2>
+    <h2 data-text="token_title">Tokenomics</h2>
     <div class="card">
-      <p>Distribución total de los tokens NovaCoin (total: 1,000,000 NC):</p>
+      <p data-text="token_desc">Distribución total de los tokens NovaCoin (total: 1,000,000 NC):</p>
       <table>
         <tr>
           <th>Uso</th>
@@ -236,85 +188,107 @@
   </section>
 
   <footer>
-    <p>© 2025 NovaCoin — Proyecto ficticio creado para demostración</p>
+    <p data-text="footer">© 2025 NovaCoin — Proyecto ficticio creado para demostración</p>
   </footer>
+
 <script>
 // Textos en ambos idiomas
 const texts = {
   es: {
     home: "Inicio",
-    about: "Sobre la Criptomoneda",
+    about: "Qué es",
     tokenomics: "Tokenomics",
     roadmap: "Hoja de Ruta",
-    welcome_title: "Bienvenido a NovaX Coin",
-    welcome_desc: "Una criptomoneda rápida, segura y construida para el futuro.",
-    about_title: "¿Qué es NovaX Coin?",
-    about_desc: "NovaX es una criptomoneda diseñada para transacciones instantáneas y bajas comisiones.",
-    token_title: "Tokenomics",
+    welcome_title: "NovaCoin",
+    welcome_desc: "La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.",
+    about_title: "¿Qué es NovaCoin?",
+    about_desc: "NovaCoin es una criptomoneda diseñada para pagos rápidos, comisiones bajas y privacidad avanzada.",
+    token_title: "Características principales",
     token_desc: "Distribución transparente para una economía sostenible.",
     roadmap_title: "Hoja de Ruta",
-    roadmap_desc: "Nuestro camino hacia un ecosistema completo.",
+    footer: "© 2025 NovaCoin — Proyecto ficticio creado para demostración",
   },
   en: {
     home: "Home",
-    about: "About the Cryptocurrency",
+    about: "What is",
     tokenomics: "Tokenomics",
     roadmap: "Roadmap",
-    welcome_title: "Welcome to NovaX Coin",
+    welcome_title: "NovaCoin",
     welcome_desc: "A fast, secure cryptocurrency built for the future.",
-    about_title: "What is NovaX Coin?",
-    about_desc: "NovaX is a cryptocurrency designed for instant transactions and low fees.",
-    token_title: "Tokenomics",
+    about_title: "What is NovaCoin?",
+    about_desc: "NovaCoin is a cryptocurrency designed for fast payments, low fees and enhanced privacy.",
+    token_title: "Main features",
     token_desc: "Transparent distribution for a sustainable economy.",
     roadmap_title: "Roadmap",
-    roadmap_desc: "Our path toward a complete ecosystem.",
+    footer: "© 2025 NovaCoin — Demo project",
   }
 };
 
-// Cambiar idioma
-function setLanguage(lang) {
-  document.querySelectorAll('[data-text]').forEach(el => {
-    const key = el.getAttribute('data-text');
-    if (texts[lang][key]) el.textContent = texts[lang][key];
+// Safety: wait for DOM
+window.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menuBtn');
+  const overlay = document.getElementById('overlay');
+  const flagEs = document.getElementById('flagEs');
+  const flagEn = document.getElementById('flagEn');
+  const langMenu = document.getElementById('langMenu');
+
+  // Toggle sidebar and overlay
+  function openSidebar(open) {
+    if (open) {
+      sidebar.style.left = '0px';
+      sidebar.setAttribute('aria-hidden','false');
+      overlay.style.display = 'block';
+    } else {
+      sidebar.style.left = '-300px';
+      sidebar.setAttribute('aria-hidden','true');
+      overlay.style.display = 'none';
+    }
+  }
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = sidebar.style.left === '0px';
+    openSidebar(!isOpen);
   });
-}
 
-// Detectar clicks en selector
-const langSelector = document.getElementById('langSelector');
-langSelector.addEventListener('change', () => {
-  setLanguage(langSelector.value);
-});
+  overlay.addEventListener('click', () => openSidebar(false));
 
-</script><div id="langFlags" style="position:fixed; top:20px; right:20px; display:flex; gap:10px; cursor:pointer; z-index:2000;">
-  <img src="https://flagcdn.com/24x18/es.png" id="flagEs" alt="Español" style="width:30px; border-radius:4px;">
-  <img src="https://flagcdn.com/24x18/gb.png" id="flagEn" alt="English" style="width:30px; border-radius:4px;">
-</div>
+  document.querySelectorAll('.sb').forEach(link => link.addEventListener('click', () => openSidebar(false)));
 
-<script>
-// Textos ya existentes (no se modifica)
+  // Language handling
+  function setLanguage(lang) {
+    if (!texts[lang]) return;
+    document.querySelectorAll('[data-text]').forEach(el => {
+      const key = el.getAttribute('data-text');
+      if (texts[lang][key]) el.textContent = texts[lang][key];
+    });
+    // update active flag style
+    flagEs.classList.toggle('active', lang === 'es');
+    flagEn.classList.toggle('active', lang === 'en');
+    localStorage.setItem('site_lang', lang);
+  }
 
-// Detectar clicks en banderas
-const flagEs = document.getElementById('flagEs');
-const flagEn = document.getElementById('flagEn');
+  // Flags click
+  flagEs.addEventListener('click', () => setLanguage('es'));
+  flagEn.addEventListener('click', () => setLanguage('en'));
 
-flagEs.addEventListener('click', () => {
-  setLanguage('es');
-  localStorage.setItem('lang','es');
-});
+  // langMenu backup clicks
+  langMenu.querySelectorAll('a[data-lang]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      setLanguage(a.getAttribute('data-lang'));
+      langMenu.style.display = 'none';
+    });
+  });
 
-flagEn.addEventListener('click', () => {
-  setLanguage('en');
-  localStorage.setItem('lang','en');
-});
-
-// Detectar idioma del navegador o guardado previamente
-window.addEventListener('load', () => {
-  const saved = localStorage.getItem('lang');
-  if (saved) {
+  // Initialize language: saved -> browser -> default es
+  const saved = localStorage.getItem('site_lang');
+  if (saved && texts[saved]) {
     setLanguage(saved);
   } else {
-    const browserLang = navigator.language.startsWith('es') ? 'es' : 'en';
-    setLanguage(browserLang);
+    const navLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    const use = navLang.startsWith('es') ? 'es' : 'en';
+    setLanguage(use);
   }
 });
 </script>
