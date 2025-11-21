@@ -1,296 +1,222 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NovaCoin - La Nueva Era de las Criptomonedas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaCoin - Criptomoneda en Solana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Arial, sans-serif;
-      background: #0d0d0d;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-    }
+    /* Reset y body */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; background: #0f0f1a; color: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Header */
     header {
-      background: linear-gradient(90deg, #121212, #1e1e1e);
-      padding: 20px 40px;
-      text-align: center;
-      border-bottom: 1px solid #333;
-      position: sticky;
-      top: 0;
+      position: fixed;
+      width: 100%;
+      background: rgba(15,15,26,0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
       z-index: 1000;
+      transition: background 0.3s ease;
     }
-    header h1 { font-size: 2.2rem; margin: 0; color: #00d4ff; }
-    header p { margin: 6px 0 0 0; color: #cfeefb; }
-    nav { margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; }
-    nav a { color: #00bfe6; text-decoration: none; margin: 5px 12px; font-weight: bold; }
-    nav a:hover { text-decoration: underline; }
+    header.scrolled { background: rgba(15,15,26,1); }
+    .logo { font-size: 1.5rem; font-weight: bold; color: #00ffe0; }
+    nav { display: flex; gap: 1.5rem; }
+    nav a { transition: color 0.3s; }
+    nav a:hover { color: #00ffe0; }
 
-    /* Sidebar */
-    #sidebar { position:fixed; top:0; left:-300px; width:300px; height:100%; background:#111; border-right:1px solid #333; padding:20px; transition:left 0.28s ease; z-index:2000; display:flex; flex-direction:column; gap:15px; }
-    #sidebar h2 { color:#00d4ff; margin:0; }
-    #sidebar a { color:#fff; text-decoration:none; padding:8px 6px; border-radius:6px; }
-    #sidebar a:hover { background: rgba(255,255,255,0.03); }
-
-    /* Overlay */
-    #overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; z-index:1500; }
-
-    /* Lang menu */
-    #langMenu { display:none; position:fixed; right:20px; top:60px; background:#111; border:1px solid #333; border-radius:8px; padding:6px; z-index:3000; }
-    #langMenu a { color:white; text-decoration:none; display:block; padding:6px 10px; }
-
-    section { padding: 40px; max-width: 900px; margin: auto; line-height: 1.6; }
-    .card { background: #161616; padding: 20px; margin: 20px 0; border-radius: 10px; border: 1px solid #222; }
-    footer { text-align: center; padding: 20px; background: #111; border-top: 1px solid #333; margin-top: 40px; }
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    th, td { border: 1px solid #222; padding: 12px; text-align: center; }
-    th { background-color: #1a1a1a; color: #00bfe6; }
-
-    /* Small screens */
-    @media (max-width: 600px) {
-      nav { flex-direction: column; }
-      nav a { margin: 8px 0; }
-      header { padding: 14px; }
-      #sidebar { width:260px; }
+    /* Menu hamburguesa */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: #00ffe0;
+      transition: all 0.3s ease;
     }
 
-    /* Flag active */
-    .flag { width:30px; height:auto; border-radius:4px; cursor:pointer; opacity:0.85; }
-    .flag.active { box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.12); opacity:1; }
+    /* Menu móvil */
+    @media (max-width: 768px) {
+      nav { 
+        position: fixed;
+        top: 0; right: -100%;
+        height: 100vh;
+        background: #0f0f1a;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 70%;
+        gap: 2rem;
+        transition: right 0.5s ease;
+      }
+      nav.active { right: 0; }
+      .hamburger { display: flex; }
+    }
 
-    /* Menu buttons */
-    .top-buttons { position:absolute; top:14px; right:14px; display:flex; gap:10px; align-items:center; }
-    .icon-btn { font-size:20px; cursor:pointer; color:#00bfe6; padding:6px; border-radius:6px; background:transparent; border:none; }
+    /* Secciones */
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    section h1 { font-size: 3rem; margin-bottom: 1rem; color: #00ffe0; }
+    section p { font-size: 1.2rem; max-width: 600px; line-height: 1.5; }
+
+    /* Botón con gradiente Solana */
+    .btn {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #9945FF, #14F195);
+      color: #0f0f1a;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #14F195;
+    }
+
+    /* Slider */
+    .slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      padding: 2rem 0;
+      scroll-behavior: smooth;
+    }
+    .slider::-webkit-scrollbar { display: none; }
+    .card {
+      min-width: 250px;
+      background: #1a1a2e;
+      padding: 1.5rem;
+      border-radius: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 15px #00ffe0;
+    }
+
+    /* Icono Solana */
+    .solana-icon {
+      width: 40px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header>
-    <h1 data-text="welcome_title">NovaCoin</h1>
-    <p data-text="welcome_desc">La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.</p>
-
-    <!-- Top buttons: language flags + menu -->
-    <div class="top-buttons">
-      <img src="https://flagcdn.com/24x18/es.png" id="flagEs" class="flag" alt="ES" title="Español">
-      <img src="https://flagcdn.com/24x18/gb.png" id="flagEn" class="flag" alt="EN" title="English">
-      <button id="menuBtn" class="icon-btn" aria-label="Open menu">≡</button>
-    </div>
-
-    <nav aria-label="Main navigation">
-      <a href="#que-es" data-text="about">Qué es</a>
-      <a href="#caracteristicas" data-text="tokenomics">Características</a>
-      <a href="#uso" data-text="home">Por qué usar</a>
-      <a href="#hoja-ruta" data-text="roadmap">Hoja de ruta</a>
-      <a href="#tokenomics" data-text="tokenomics">Tokenomics</a>
+    <div class="logo">NovaCoin</div>
+    <nav id="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#features">Características</a>
+      <a href="#tokenomics">Tokenomics</a>
+      <a href="#solana">Solana</a>
+      <a href="#contacto">Contacto</a>
     </nav>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </header>
 
-  <!-- Sidebar animado -->
-  <div id="sidebar" aria-hidden="true">
-    <h2 data-text="home">Menú</h2>
-    <a href="#que-es" class="sb">Qué es</a>
-    <a href="#caracteristicas" class="sb">Características</a>
-    <a href="#uso" class="sb">Por qué usar</a>
-    <a href="#hoja-ruta" class="sb">Hoja de ruta</a>
-    <a href="#tokenomics" class="sb">Tokenomics</a>
-  </div>
+  <!-- Sección Inicio -->
+  <section id="inicio">
+    <h1>Bienvenido a NovaCoin</h1>
+    <p>La criptomoneda del futuro, rápida, segura y descentralizada.</p>
+    <button class="btn">Unirse ahora</button>
+  </section>
 
-  <!-- Overlay oscuro -->
-  <div id="overlay"></div>
-
-  <!-- Lang menu (backup, not used if flags present) -->
-  <div id="langMenu">
-    <a href="#" data-lang="es"> Español</a>
-    <a href="#" data-lang="en"> English</a>
-  </div>
-
-  <section id="que-es">
-    <h2 data-text="about_title">¿Qué es NovaCoin?</h2>
-    <div class="card">
-      <p data-text="about_desc">
-        NovaCoin es una criptomoneda descentralizada diseñada para pagos rápidos, comisiones bajas
-        y privacidad avanzada. Construida con tecnología blockchain de última generación, ofrece una
-        experiencia segura y accesible para todos.
-      </p>
+  <!-- Sección Características -->
+  <section id="features">
+    <h1>Características</h1>
+    <div class="slider">
+      <div class="card">Transacciones instantáneas</div>
+      <div class="card">Seguridad de nivel bancario</div>
+      <div class="card">Descentralización total</div>
+      <div class="card">Energía eficiente</div>
     </div>
   </section>
 
-  <section id="caracteristicas">
-    <h2 data-text="token_title">Características principales</h2>
-    <div class="card">
-      <ul>
-        <li><strong>Transacciones instantáneas:</strong> Confirmaciones en menos de 2 segundos.</li>
-        <li><strong>Bajas comisiones:</strong> Envía dinero globalmente sin costos elevados.</li>
-        <li><strong>Privacidad mejorada:</strong> Tu información permanece protegida.</li>
-        <li><strong>Tecnología ecológica:</strong> Consumo energético mínimo.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="uso">
-    <h2 data-text="about_title">¿Por qué usar NovaCoin?</h2>
-    <div class="card">
-      <p data-text="about_desc">NovaCoin combina innovación con simplicidad. Ya seas un inversor, desarrollador o usuario
-        común, nuestra tecnología te ofrece libertad y control total de tus finanzas digitales.</p>
-    </div>
-  </section>
-
-  <section id="hoja-ruta">
-    <h2 data-text="roadmap_title">Hoja de ruta</h2>
-    <div class="card">
-      <ul>
-        <li>✔ Lanzamiento de red principal (Mainnet)</li>
-        <li>✔ Implementación de contratos inteligentes</li>
-        <li>⧗ Integración con exchanges globales</li>
-        <li>⧗ App móvil para pagos con QR</li>
-      </ul>
-    </div>
-  </section>
-
+  <!-- Sección Tokenomics -->
   <section id="tokenomics">
-    <h2 data-text="token_title">Tokenomics</h2>
-    <div class="card">
-      <p data-text="token_desc">Distribución total de los tokens NovaCoin (total: 1,000,000 NC):</p>
-      <table>
-        <tr>
-          <th>Uso</th>
-          <th>Porcentaje</th>
-          <th>Tokens</th>
-        </tr>
-        <tr>
-          <td>Equipo y desarrollo</td>
-          <td>20%</td>
-          <td>200,000 NC</td>
-        </tr>
-        <tr>
-          <td>Marketing y comunidad</td>
-          <td>15%</td>
-          <td>150,000 NC</td>
-        </tr>
-        <tr>
-          <td>Fondos de reserva</td>
-          <td>10%</td>
-          <td>100,000 NC</td>
-        </tr>
-        <tr>
-          <td>ICO / Venta pública</td>
-          <td>40%</td>
-          <td>400,000 NC</td>
-        </tr>
-        <tr>
-          <td>Recompensas y staking</td>
-          <td>15%</td>
-          <td>150,000 NC</td>
-        </tr>
-      </table>
+    <h1>Tokenomics</h1>
+    <p>Suministro total: 1,000,000 NC <br>
+       Cada transacción fortalece la red y premia a los holders. <br>
+       Token estándar SPL en la red Solana.</p>
+  </section>
+
+  <!-- Sección Solana -->
+  <section id="solana">
+    <h1>Red Solana <img src="https://cryptologos.cc/logos/solana-sol-logo.png" class="solana-icon" alt="Solana"></h1>
+    <p>NovaCoin aprovechará la velocidad y eficiencia de Solana. Transacciones rápidas, tarifas mínimas y seguridad de nivel blockchain de última generación.</p>
+    <button class="btn">Conseguir NovaCoin</button>
+    <div class="slider">
+      <div class="card">Transacciones <strong>rápidas</strong></div>
+      <div class="card">Bajas tarifas</div>
+      <div class="card">Seguridad robusta</div>
+      <div class="card">Compatible con wallets SPL</div>
     </div>
   </section>
 
-  <footer>
-    <p data-text="footer">© 2025 NovaCoin — Proyecto ficticio creado para demostración</p>
-  </footer>
+  <!-- Sección Contacto -->
+  <section id="contacto">
+    <h1>Contacto</h1>
+    <p>¿Tienes preguntas o quieres unirte a nuestra comunidad? Escríbenos.</p>
+    <button class="btn">Contactar</button>
+  </section>
 
-<script>
-// Textos en ambos idiomas
-const texts = {
-  es: {
-    home: "Inicio",
-    about: "Qué es",
-    tokenomics: "Tokenomics",
-    roadmap: "Hoja de Ruta",
-    welcome_title: "NovaCoin",
-    welcome_desc: "La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.",
-    about_title: "¿Qué es NovaCoin?",
-    about_desc: "NovaCoin es una criptomoneda diseñada para pagos rápidos, comisiones bajas y privacidad avanzada.",
-    token_title: "Características principales",
-    token_desc: "Distribución transparente para una economía sostenible.",
-    roadmap_title: "Hoja de Ruta",
-    footer: "© 2025 NovaCoin — Proyecto ficticio creado para demostración",
-  },
-  en: {
-    home: "Home",
-    about: "What is",
-    tokenomics: "Tokenomics",
-    roadmap: "Roadmap",
-    welcome_title: "NovaCoin",
-    welcome_desc: "A fast, secure cryptocurrency built for the future.",
-    about_title: "What is NovaCoin?",
-    about_desc: "NovaCoin is a cryptocurrency designed for fast payments, low fees and enhanced privacy.",
-    token_title: "Main features",
-    token_desc: "Transparent distribution for a sustainable economy.",
-    roadmap_title: "Roadmap",
-    footer: "© 2025 NovaCoin — Demo project",
-  }
-};
-
-// Safety: wait for DOM
-window.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar');
-  const menuBtn = document.getElementById('menuBtn');
-  const overlay = document.getElementById('overlay');
-  const flagEs = document.getElementById('flagEs');
-  const flagEn = document.getElementById('flagEn');
-  const langMenu = document.getElementById('langMenu');
-
-  // Toggle sidebar and overlay
-  function openSidebar(open) {
-    if (open) {
-      sidebar.style.left = '0px';
-      sidebar.setAttribute('aria-hidden','false');
-      overlay.style.display = 'block';
-    } else {
-      sidebar.style.left = '-300px';
-      sidebar.setAttribute('aria-hidden','true');
-      overlay.style.display = 'none';
-    }
-  }
-
-  menuBtn.addEventListener('click', () => {
-    const isOpen = sidebar.style.left === '0px';
-    openSidebar(!isOpen);
-  });
-
-  overlay.addEventListener('click', () => openSidebar(false));
-
-  document.querySelectorAll('.sb').forEach(link => link.addEventListener('click', () => openSidebar(false)));
-
-  // Language handling
-  function setLanguage(lang) {
-    if (!texts[lang]) return;
-    document.querySelectorAll('[data-text]').forEach(el => {
-      const key = el.getAttribute('data-text');
-      if (texts[lang][key]) el.textContent = texts[lang][key];
+  <script>
+    // Menu hamburguesa
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      hamburger.classList.toggle('open');
     });
-    // update active flag style
-    flagEs.classList.toggle('active', lang === 'es');
-    flagEn.classList.toggle('active', lang === 'en');
-    localStorage.setItem('site_lang', lang);
-  }
 
-  // Flags click
-  flagEs.addEventListener('click', () => setLanguage('es'));
-  flagEn.addEventListener('click', () => setLanguage('en'));
+    // Animación al hacer scroll
+    const sections = document.querySelectorAll('section');
+    window.addEventListener('scroll', () => {
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100){
+          sec.classList.add('visible');
+        }
+      });
 
-  // langMenu backup clicks
-  langMenu.querySelectorAll('a[data-lang]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      setLanguage(a.getAttribute('data-lang'));
-      langMenu.style.display = 'none';
+      // Cambiar fondo header al hacer scroll
+      const header = document.querySelector('header');
+      if(window.scrollY > 50) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
     });
-  });
+  </script>
 
-  // Initialize language: saved -> browser -> default es
-  const saved = localStorage.getItem('site_lang');
-  if (saved && texts[saved]) {
-    setLanguage(saved);
-  } else {
-    const navLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-    const use = navLang.startsWith('es') ? 'es' : 'en';
-    setLanguage(use);
-  }
-});
-</script>
 </body>
 </html>
