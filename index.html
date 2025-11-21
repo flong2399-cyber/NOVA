@@ -1,64 +1,179 @@
-<!DOCTYPE html>
-<html lang='es'>
+<!DOCTYPE html><html lang="es">
 <head>
-<meta charset='UTF-8' />
-<meta name='viewport' content='width=device-width, initial-scale=1.0' />
-<title>NovaCoin - The Future of Decentralized Finance</title>
-<style>
-body{margin:0;font-family:"Poppins",sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden;}
-header{text-align:center;padding:80px 20px;background:linear-gradient(135deg,#0ff,#7f00ff);animation:gradientMove 10s infinite alternate;}
-@keyframes gradientMove{0%{background-position:0% 50%;}100%{background-position:100% 50%;}}
-.logo{font-size:64px;font-weight:800;letter-spacing:3px;text-transform:uppercase;background:linear-gradient(90deg,#0ff,#7f00ff);-webkit-background-clip:text;color:transparent;animation:glow 2s infinite alternate;}
-@keyframes glow{from{text-shadow:0 0 10px #0ff;}to{text-shadow:0 0 25px #7f00ff;}}
-.section{padding:60px 20px;max-width:900px;margin:auto;line-height:1.7;}
-h2{color:#0ff;margin-bottom:20px;font-size:32px;}
-.card{background:#111;padding:20px;margin:20px 0;border-radius:15px;box-shadow:0 0 20px rgba(0,255,255,0.1);transition:transform 0.3s;}
-.card:hover{transform:translateY(-5px);box-shadow:0 0 30px rgba(0,255,255,0.3);}
-.footer{text-align:center;padding:20px;color:#aaa;background:#000;border-top:1px solid #222;font-size:14px;}
-.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:-1;}
-.particle{position:absolute;width:6px;height:6px;background:#0ff;border-radius:50%;opacity:0.5;animation:floatUp linear infinite;}
-@keyframes floatUp{from{transform:translateY(100vh);}to{transform:translateY(-10vh);}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaCoin - La Nueva Era de las Criptomonedas</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, #121212, #1e1e1e);
+      padding: 20px 40px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      color: #00d4ff;
+    }
+    nav {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav a {
+      color: #00bfe6;
+      text-decoration: none;
+      margin: 5px 15px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.6;
+    }
+    .card {
+      background: #161616;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      border: 1px solid #222;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      border-top: 1px solid #333;
+      margin-top: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #222;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #1a1a1a;
+      color: #00bfe6;
+    }
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        margin: 8px 0;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class='particles' id='particles'></div>
-
-<header>
-<div class='logo'>NovaCoin</div>
-<p>La criptomoneda del futuro. Rápida, segura y totalmente descentralizada.</p>
-</header>
-
-<section class='section'>
-<h2>¿Qué es NovaCoin?</h2>
-<div class='card'>
-<p>NovaCoin es una criptomoneda de nueva generación diseñada para pagos globales instantáneos, con comisiones ultrabajas y una red blockchain altamente escalable.</p>
-</div>
-
-<h2>Ventajas principales</h2>
-<div class='card'><strong>⚡ Transacciones instantáneas</strong><br>Confirmaciones en menos de 1 segundo.</div>
-<div class='card'><strong>🔒 Seguridad avanzada</strong><br>Protección mediante cifrado cuántico-resistente.</div>
-<div class='card'><strong>🌍 Descentralización real</strong><br>Controlada por la comunidad, no por bancos.</div>
-
-<h2>Únete al ecosistema</h2>
-<div class='card'>
-<p>Forma parte de la revolución financiera. Descubre wallets, herramientas, minado, staking y más.</p>
-</div>
-</section>
-
-<div class='footer'>© 2025 NovaCoin. Proyecto descentralizado.</div>
-
-<script>
-const particles=document.getElementById("particles");
-for(let i=0;i<60;i++){
-  const p=document.createElement("div");
-  p.classList.add("particle");
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=5+Math.random()*10+"s";
-  p.style.opacity=Math.random();
-  particles.appendChild(p);
-}
-</script>
-
+  <header>
+    <h1>NovaCoin</h1>
+    <p>La criptomoneda del futuro, creada para velocidad, seguridad y libertad financiera.</p>
+    <nav>
+      <a href="#que-es">Qué es</a>
+      <a href="#caracteristicas">Características</a>
+      <a href="#uso">Por qué usar</a>
+      <a href="#hoja-ruta">Hoja de ruta</a>
+      <a href="#tokenomics">Tokenomics</a>
+    </nav>
+  </header> <section id="que-es">
+    <h2>¿Qué es NovaCoin?</h2>
+    <div class="card">
+      <p>
+        NovaCoin es una criptomoneda descentralizada diseñada para pagos rápidos, comisiones bajas
+        y privacidad avanzada. Construida con tecnología blockchain de última generación, ofrece una
+        experiencia segura y accesible para todos.
+      </p>
+    </div>
+  </section> <section id="caracteristicas">
+    <h2>Características principales</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Transacciones instantáneas:</strong> Confirmaciones en menos de 2 segundos.</li>
+        <li><strong>Bajas comisiones:</strong> Envía dinero globalmente sin costos elevados.</li>
+        <li><strong>Privacidad mejorada:</strong> Tu información permanece protegida.</li>
+        <li><strong>Tecnología ecológica:</strong> Consumo energético mínimo.</li>
+      </ul>
+    </div>
+  </section> <section id="uso">
+    <h2>¿Por qué usar NovaCoin?</h2>
+    <div class="card">
+      <p>
+        NovaCoin combina innovación con simplicidad. Ya seas un inversor, desarrollador o usuario
+        común, nuestra tecnología te ofrece libertad y control total de tus finanzas digitales.
+      </p>
+    </div>
+  </section> <section id="hoja-ruta">
+    <h2>Hoja de ruta</h2>
+    <div class="card">
+      <ul>
+        <li>✔ Lanzamiento de red principal (Mainnet)</li>
+        <li>✔ Implementación de contratos inteligentes</li>
+        <li>⧗ Integración con exchanges globales</li>
+        <li>⧗ App móvil para pagos con QR</li>
+      </ul>
+    </div>
+  </section> <section id="tokenomics">
+    <h2>Tokenomics</h2>
+    <div class="card">
+      <p>Distribución total de los tokens NovaCoin (total: 1,000,000 NC):</p>
+      <table>
+        <tr>
+          <th>Uso</th>
+          <th>Porcentaje</th>
+          <th>Tokens</th>
+        </tr>
+        <tr>
+          <td>Equipo y desarrollo</td>
+          <td>20%</td>
+          <td>200,000 NC</td>
+        </tr>
+        <tr>
+          <td>Marketing y comunidad</td>
+          <td>15%</td>
+          <td>150,000 NC</td>
+        </tr>
+        <tr>
+          <td>Fondos de reserva</td>
+          <td>10%</td>
+          <td>100,000 NC</td>
+        </tr>
+        <tr>
+          <td>ICO / Venta pública</td>
+          <td>40%</td>
+          <td>400,000 NC</td>
+        </tr>
+        <tr>
+          <td>Recompensas y staking</td>
+          <td>15%</td>
+          <td>150,000 NC</td>
+        </tr>
+      </table>
+    </div>
+  </section> <footer>
+    <p>© 2025 NovaCoin — Proyecto ficticio creado para demostración</p>
+  </footer>
 </body>
 </html>
